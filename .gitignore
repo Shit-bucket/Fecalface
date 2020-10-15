@@ -93,8 +93,11 @@ Thumbs.db
 # Backend #
 ###########
 *.pyc
-dump.rdb
 *.sw?
+avatar/
+face/
+makeup/
+recog/
 
 # Pyenv #
 #########
