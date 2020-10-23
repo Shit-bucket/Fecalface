@@ -94,6 +94,7 @@ Thumbs.db
 ###########
 *.pyc
 *.sw?
+*.tar.gz
 avatar/
 face/
 makeup/
