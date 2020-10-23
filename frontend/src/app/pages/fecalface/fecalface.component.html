@@ -1,0 +1,204 @@
+<div class="row">
+
+  <nb-card class="logo col-md-12"></nb-card>
+
+  <div class="col-md-12">
+  <!-- <div class="offset-md-3 col-md-6"> -->
+    <nb-flip-card  [showToggleButton]="false" [flipped]="flipped">
+      <nb-card-front>
+
+        <nb-card class="particular">
+          <nb-card-body>
+            <div class="row total">
+                <div class="col-md-4 container-right">
+                <div class="separator3d">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="input-form">
+                  <form>
+                      <!-- <div class="form-group row" style="padding-top: 10px;padding-right:20px; margin-bottom: 10px;"> -->
+                    <div class="form-group row" style="overflow: hidden;">
+
+                      <label for="inputLanguage" class="offset-md-2 col-md-1 col-form-label" nbTooltip="Choose language - Escoja el lenguaje" nbTooltipStatus="default" style="text-align: right; padding-right: 0px; color: #b1b1b1"><i class="fas fa-globe-americas fa-2x" style="text-align: right; padding-right: 0px; margin-bottom: 15px;"></i></label>
+                      <div class="col-sm-7">
+                        <nb-select [(selected)]="selectedLang" fullWidth="true">
+                          <nb-option value="spanish">Español - Spanish</nb-option>
+                          <nb-option value="english">English - Inglés</nb-option>
+                        </nb-select>
+                      </div>
+                      <div class="col-sm-2"></div>
+
+                      <label for="inputOption" class="offset-md-2 col-md-1 col-form-label" nbTooltip="RRSS" nbTooltipStatus="default" style="text-align: right; padding-right: 0px; color: #b1b1b1"><i class="fas fa-caret-square-down fa-2x" style="text-align: right; padding-right: 0px;"></i></label>
+                      <div class="col-sm-7">
+                        <nb-select [(selected)]="selectedItem" fullWidth="true">
+                          <nb-option value="instagram">Instagram</nb-option>
+                          <nb-option value="twitter">Twitter</nb-option>
+                        </nb-select>
+                      </div>
+                      <div class="col-sm-2"></div>
+
+                      <label for="inputUsername" class="offset-md-2 col-md-1 col-form-label" nbTooltip="Username - Nombre de usuario" nbTooltipStatus="default" style="text-align: right; padding-right: 0px; color: #b1b1b1"><i class="fas fa-user-circle fa-2x" style="text-align: right; padding-right: 0px;"></i></label>
+                      <div class="col-sm-7">
+                        <input type="text" class="form-control" #username id="username" placeholder="Username" autocomplete="off" style="background-color: rgba(0, 0, 0,0.5); border: none;">
+                      </div>
+                    </div>
+                      <div class="col-sm-2"></div>
+  
+                    <div class="col-sm-12">
+                      <button nbButton outline status="info" (click)="toggleFlipViewAndProcess(selectedLang, selectedItem, username.value)" style="border: none; font-weight: 400; width: 100%">
+                          <i class="fas fa-angry" style="padding-right: 5px"></i> PROCESS 
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="separator3d">
+                </div>
+              </div>
+            </div>
+          </nb-card-body>
+
+        </nb-card>
+
+      </nb-card-front>
+
+      <!-- CARD BACK -->
+
+      <nb-card-back>
+
+        <nb-card class="col-md-12 novisible">
+          <nb-card-body>
+            <div class="proc-container" *ngIf="result['source']">
+              <ngx-avatar *ngIf="result['source']" [data]="result['source']"></ngx-avatar>
+              <div class="union" *ngIf="result['detect']"></div>
+              <ngx-avatar *ngIf="result['detect']" [data]="result['detect']"></ngx-avatar>
+              <div class="union" *ngIf="result['makeup']"></div>
+              <ngx-avatar *ngIf="result['makeup']" [data]="result['makeup']"></ngx-avatar>
+              <div class="union" *ngIf="result['recog']"></div>
+              <ngx-avatar *ngIf="result['recog']" [data]="result['recog']"></ngx-avatar>
+              <!--
+              <div class="col-md-3">
+                  <ngx-avatar [data]="result['source']"></ngx-avatar>
+              </div>
+              -->
+              <div class="attack" *ngIf="result['detect'] && result['makeup'] == undefined && result['detect']['status'] == 'Face detected'">
+                <div class="mask bugged">
+                  <img src="/assets/images/FecalFace-simetric-logo-trans.png" alt="Attack">
+                  <div class="atext">Attacking</div>
+                </div> 
+              </div> 
+            </div>
+          </nb-card-body>
+        </nb-card>
+
+        <nb-card class="col-md-12 overlay">
+          <nb-card-body>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-back>
+    </nb-flip-card>
+  </div>
+
+  <!-- <div class="col-md-4" style="top: -47rem;"  [className]="flipped ? 'hidden-card' : 'visible-card'"> -->
+  <div class="col-md-4" style="top: -47rem;" [ngClass]="{'hidden-card': flipped == true, 'visible-card': flipped == false}" *ngIf="selectedLang == 'spanish'">
+     <nb-card size="small">
+
+       <aside class="card-desc">
+         <div class="wrp-card">
+           <h1 class="card-title">QUE HACE</h1>
+           <p class="card-description">
+              Colecta el avatar desde una RRSS, intenta determinar la posición de un rostro si es que existe y posteriormente lo ataca a fin de lograr que la comparación final entre el rostro original y el atacado no sean reconocibles por una IA, pero al ojo humano se verán similares.
+           </p>
+         </div>
+       </aside>
+
+     </nb-card>
+  </div>
+
+  <div class="col-md-4" style="top: -47rem;" [ngClass]="{'hidden-card': flipped == true, 'visible-card': flipped == false}" *ngIf="selectedLang == 'spanish'">
+     <nb-card size="small">
+
+       <aside class="card-desc">
+         <div class="wrp-card">
+           <h1 class="card-title">PROYECTO</h1>
+           <p class="card-description">
+           Fecal face nace del concepto "balde de caca" donde la idea es intentar pudrir los datos que tienen acerca de cada uno.<br> Específicamente se relaciona con la detección y reconocimiento de rostros.<br> La motivación de este proyecto es que las empresas que realizan la recolección de nuestros rostros ya no puedan identificarnos.
+           </p>
+         </div>
+       </aside>
+
+     </nb-card>
+  </div>
+  <div class="col-md-4" style="top: -47rem;" [ngClass]="{'hidden-card': flipped == true, 'visible-card': flipped == false}" *ngIf="selectedLang == 'spanish'">
+     <nb-card size="small">
+
+       <aside class="card-desc">
+         <div class="wrp-card">
+           <h1 class="card-title">QUE NO HACE</h1>
+           <p class="card-description">
+                Este proyecto no va a hacer que nuestros rostros sean confundidos con los de un oso panda. Y actualmente el proyecto no funciona con avatars con más de un rostro.
+           </p>
+         </div>
+       </aside>
+
+     </nb-card>
+  </div>
+
+  <div class="col-md-4" style="top: -47rem;" [ngClass]="{'hidden-card': flipped == true, 'visible-card': flipped == false}" *ngIf="selectedLang == 'english'">
+     <nb-card size="small">
+
+       <aside class="card-desc">
+         <div class="wrp-card">
+           <h1 class="card-title">WHAT IT DOES</h1>
+           <p class="card-description">
+                It collects the avatar from a RRSS, tries to determine the position of a face if it exists and then attacks it in order to make the final comparison between the original face and the attacked one not recognizable by an AI, but for human eye will look similar.
+           </p>
+         </div>
+       </aside>
+
+     </nb-card>
+  </div>
+  <div class="col-md-4" style="top: -47rem;" [ngClass]="{'hidden-card': flipped == true, 'visible-card': flipped == false}" *ngIf="selectedLang == 'english'">
+     <nb-card size="small">
+
+       <aside class="card-desc">
+         <div class="wrp-card">
+           <h1 class="card-title">PROJECT</h1>
+           <p class="card-description">
+           Fecal face was born from the concept of "Shit Bucket" where the idea is to try to rot the data they have about each other.  <br>Specifically, it is related to the detection and recognition of faces. <br>The motivation of this project is that the companies that collect our faces can no longer identify us.
+           </p>
+         </div>
+       </aside>
+
+     </nb-card>
+  </div>
+  <div class="col-md-4" style="top: -47rem;" [ngClass]="{'hidden-card': flipped == true, 'visible-card': flipped == false}" *ngIf="selectedLang == 'english'">
+     <nb-card size="small">
+
+       <aside class="card-desc">
+         <div class="wrp-card">
+           <h1 class="card-title">WHAT IT<br>DOESN'T</h1>
+           <p class="card-description">
+           This project will not cause our faces to be confused with panda bear's one. <br> And at this moment the project  doesn't work with avatars with more than one face.
+           </p>
+         </div>
+       </aside>
+
+     </nb-card>
+  </div>
+
+  <div class="col-md-12" style="top: -62rem;" [ngClass]="{'hidden-card': flipped == false, 'visible-card': flipped == true}">
+      <div class="neuro-button" nbTooltip="Back - Volver" nbTooltipStatus="default">
+          <div class="close-button" (click)="toggleFlipView()"></div>
+      </div>
+  </div>
+
+  <div class="col-md-12" style="top: -59rem;" *ngIf="result['makeup']" [ngClass]="{'hidden-card': flipped == false, 'visible-card': flipped == true}">
+      <div class="neuro-button" nbTooltip="Download - Descargar" nbTooltipStatus="default">
+          <div class="down-button" (click)="downloadImg(result['source']['url_img'])"></div>
+      </div>
+  </div>
+
+</div>

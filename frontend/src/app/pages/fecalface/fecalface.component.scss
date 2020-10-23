@@ -1,0 +1,491 @@
+@import '../../@theme/styles/themes';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+
+  .neuro-button {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    // background: #283647;
+    // background: #222d3a;
+    background: #283647;
+    margin: auto;
+    box-shadow:  4px 4px 9px #121921, 
+                 -4px -4px 9px #3e536d;
+  }
+  .close-button {
+    width: 100px;
+    height: 100px;
+    box-shadow: 0px 10 10px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    // background: #111;
+    left: 50%;
+    top: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    position: absolute;
+    display: block;
+    z-index: 200;
+    text-indent: -9999px;
+  }
+  .close-button:before,
+  .close-button:after {
+    content: '';
+    width: 55%;
+    height: 2px;
+    background: #fff;
+    position: absolute;
+    top: 48%;
+    left: 22%;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+  }
+  .close-button:after {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+  }
+  .close-button:hover:before {
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    transform: rotate(135deg);
+    top: 29%;
+    left: 18%;
+  }
+  .close-button:hover:after {
+    -webkit-transform: rotate(-135deg);
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+    top: 67%;
+    left: 18%;
+  }
+
+  .down-button {
+    width: 100px;
+    height: 100px;
+    box-shadow: 0px 10 10px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    // background: #111;
+    left: 50%;
+    top: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    position: absolute;
+    display: block;
+    z-index: 200;
+    text-indent: -9999px;
+  }
+  .down-button:before,
+  .down-button:after {
+    content: '';
+    width: 55%;
+    height: 2px;
+    background: #fff;
+    position: absolute;
+    top: 48%;
+    left: 22%;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+  }
+  .down-button:after {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+  }
+  .down-button:hover:before {
+    -webkit-transform: rotate(-135deg);
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+    bottom: 18%;
+    left: 3%;
+  }
+  .down-button:hover:after {
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    transform: rotate(135deg);
+    bottom: 18%;
+    left: 41%;
+  }
+
+  .card-desc {
+    position: relative;
+    top: 0;
+    left: 0;
+    
+    width: 100%;
+    height: 100%;
+    padding: 12px 20px;
+    text-align: center;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+    background-image: url('/assets/images/ff.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #fff;
+    
+    transition: all .1s ease-in-out;
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, .8);
+      background-image: url('/assets/images/ffo.png');
+      
+      .wrp-card {
+        &::after, &::before {
+          transform: scale3d(1,1,1);
+          transition: transform .30s linear;
+        }
+      }
+      
+      .card-title {
+        margin-top: -20px;
+        font-size: 22px;
+      }
+      
+      .card-description {
+        opacity: 1;
+        margin-top: 30px;
+      }
+    }
+  }
+  
+  .wrp-card {
+    height: 95%;
+    padding: 5px;
+    position: relative;
+    
+    transition: border .25s linear;
+    
+    &::after, 
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+    }
+    
+    &::before {
+      transform: scale3d(0,1,1);
+    }
+  
+    &::after {
+      transform: scale3d(1,0,1);
+    }
+  }
+  
+  .card-title {
+    margin-top: 40px;
+    font-size: 35px;
+    font-weight: 300;  
+    text-transform: uppercase;
+    transition: all .25s linear;
+  }
+  
+  .card-description {
+    font-size: 18px;
+    margin-top: 80px;
+    opacity: 0;
+    text-align: justify;
+    
+    transition: all .25s linear;
+  }
+
+  .visible-card {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 2s linear;
+  }
+
+  .hidden-card {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
+  }
+
+
+  p {
+    color: #b1b1b1;
+  }
+
+  .form-control {
+    color: #b1b1b1;
+  }
+
+  .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(177, 177, 177, 0.25);
+  }
+
+  .nb-theme-dark nb-select.appearance-outline.status-basic .select-button {
+    // background-color: rgba(0,0,0,0.3);
+    background-color: red !important;
+  }
+
+  nb-option .selected {
+    background-color: red;
+  }
+
+  nb-checkbox {
+    margin-bottom: 1rem;
+  }
+  
+  .form-inline [fullWidth] {
+    flex: 1;
+  }
+  
+  .form-inline > * {
+    margin: 0 1.5rem 1.5rem 0;
+  }
+  
+  nb-card.inline-form-card nb-card-body {
+    padding-bottom: 0;
+  }
+
+  nb-card {
+    background-color: rgba(0,0,0,0);
+    border-radius: 0px;
+    border: none;
+    box-shadow: 0px 12px 37px 0px rgba(0,0,0,0.77);
+    height: 15rem;
+  }
+  nb-card-body {
+    padding: 0rem 1rem;
+    height: 15rem;
+  }
+
+  .total {
+    height: 15rem;
+    overflow: hidden;
+  }
+
+  .novisible{
+    background-color: rgba(0,0,0,0);
+    border-radius: 0px;
+    border: none;
+    box-shadow: none;
+    padding: 0rem 1rem;
+    height: 45rem;
+  }
+
+  .overlay{
+    background-color: rgba(0,0,0,0);
+    border-radius: 0px;
+    border: none;
+    box-shadow: 0px 12px 37px 0px rgba(0,0,0,0.77);
+    padding: 0rem 2.5rem;
+    height: 15rem;
+    top: -47rem;
+    z-index: -1;
+  }
+
+  .logo {
+    background-color: rgba(0,0,0,0.2);
+    background-image: url('/assets/images/FecalFace-simetric-logo-trans.png');
+    width: 100%;
+    height: 275px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .separator {
+    width: 100%;
+    height: 30px;
+    border-bottom:5px solid rgba(0,0,0,0.6);
+  }
+
+  .separator3d {
+    // background-color: rgba(0, 0, 0, 0.3);
+    width: 5px;
+    height: 100%;
+    // border-bottom:2px solid rgba(0,0,0,0.6);
+    display: inline-block;
+    border-radius: 2px;
+    background: #2c3c50;
+    box-shadow:  3px 3px 6px #1b2532, 
+                 -3px -3px 6px #3d536e;
+  }
+
+  .container-right {
+    text-align: right;
+  }
+
+  .input-form {
+    // background-color: rgba(0,0,0,0.2);
+    // margin-top: 20px;
+    padding: 20px;
+  }
+
+  .proc-container {
+    display: flex;
+    justify-content: center;
+    // justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    flex-direction: row;
+  }
+
+  .union {
+    height: 5px;
+    width: 100%;
+    margin: 110px;
+    // background-color: #151a30;
+    background: #283647;
+    box-shadow:  5px 5px 10px #19212c, 
+                 -5px -5px 10px #374b62;
+  }
+
+  .stepprocess {
+    overflow-x: hidden;
+    margin-top: 10vh;
+    border-radius: 25px;
+    background: #212d3e;
+    box-shadow:  13px 13px 27px #1c2635, 
+                 -13px -13px 27px #263447;
+  }
+
+  .left-form {
+    // flex: 0 0 auto;
+    flex: 1;
+    background: linear-gradient(to top, #e96443, #904e95);
+  }
+
+  .right-form {
+    // flex: 1 0 auto;
+    flex: 1;
+    background: linear-gradient(to bottom, #11998e, #38ef7d);
+  }
+
+  /deep/ .user-picture .image {
+    height: 150px !important;
+    width: 150px !important;
+  }
+
+  .appear {
+    animation-name: example;
+    animation-duration: 6s;
+  }
+  
+  @keyframes example {
+    from {color: rgba(177, 177, 177, 0);}
+    to {color: rgba(177, 177, 177, 0.8);;}
+  }
+
+.attack {
+  opacity: 1;
+  position: absolute;
+  border-radius: inherit;
+  top: 10px;
+  right: 200px;
+  left: 200px;
+  // overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  visibility: visible;
+
+  .mask {
+    z-index: 9000;
+    margin-top: 20px;
+    border-radius: 50%;
+    // overflow: hidden;
+    width: 150px;
+    height: 150px;
+    background: transparent;
+    filter: none;
+  }
+  
+  @keyframes blurOut {
+    0% {
+      filter: blur(20px);
+      -webkit-filter: blur(20px); 
+      -moz-filter: blur(20px); 
+      -ms-filter: blur(20px);
+    }
+    50% {
+      filter: blur(0);
+      -webkit-filter: blur(0); 
+      -moz-filter: blur(0); 
+      -ms-filter: blur(0);
+    }
+    100% {
+      filter: blur(20px);
+      -webkit-filter: blur(20px); 
+      -moz-filter: blur(20px); 
+      -ms-filter: blur(20px);
+    }
+  }
+  
+  img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+  }
+
+  .atext {
+    color: #b1b1b1;
+    font-size: 20px;
+    z-index:9999;
+    width: 150px;
+    text-align: center;
+  }
+  
+  .mask.bugged img {
+    animation: blurOut 4s linear infinite;
+  }
+  
+  .mask.bugged .atext  {
+    animation: blurOut 4s linear infinite;
+  }
+  
+  .mask.unbugged {
+    animation: blurOut 4s linear infinite;
+  }
+
+}
+
+  @include media-breakpoint-down(xl) {
+    .left-form {
+      display: none;
+    }
+  }
+}

@@ -30,6 +30,8 @@ class Fawkes(object):
         self.gpu = gpu
         self.batch_size = batch_size
         global sess
+        if ("CUDA_VISIBLE_DEVICES" in os.environ):
+            os.environ.pop("CUDA_VISIBLE_DEVICES")
         sess = init_gpu(gpu)
         global graph
         graph = tf.get_default_graph()
@@ -47,7 +49,8 @@ class Fawkes(object):
             self.fs_names = feature_extractor
 
         self.aligner = aligner(sess)
-        self.feature_extractors_ls = [load_extractor(name) for name in self.fs_names]
+        self.feature_extractors_ls = [load_extractor(
+            name) for name in self.fs_names]
 
         self.protector = None
         self.protector_param = None
@@ -69,13 +72,6 @@ class Fawkes(object):
             th = 0.008
             max_step = 500
             lr = 10
-        elif mode == 'ultra':
-            if not tf.test.is_gpu_available():
-                print("Please enable GPU for ultra setting...")
-                sys.exit(1)
-            th = 0.01
-            max_step = 1000
-            lr = 8
         else:
             raise Exception("mode must be one of 'min', 'low', 'mid', " +
                             "'high', 'ultra', 'custom'")
@@ -85,35 +81,15 @@ class Fawkes(object):
                        th=0.04, sd=1e9, lr=10, max_step=500, batch_size=1,
                        format='png', separate_target=True, debug=False,
                        no_align=False, lang="spanish"):
-        if mode == 'custom':
-            pass
-        else:
-            th, max_step, lr = self.mode2param(mode)
+        th, max_step, lr = self.mode2param(mode)
 
         current_param = "-".join([str(x) for x in [mode, th, sd, lr, max_step,
                                                    batch_size, format,
                                                    separate_target, debug]])
 
-        # image_paths, loaded_images = filter_image_paths(image_paths)
-
         img = load_image(unprotected + "/" + image)
-        # if img is None:
-        #     rint("{} is not an image file, skipped".format(p.split("/")[-1]))
-        #     continue
-        # new_image_paths.append(p)
-        # new_images.append(img)
 
-        # if not image_paths:
-        #     print("No images in the directory")
-        #     return 3
-
-        print("======= HERE =========")
-        print("Unprotected: {}".format(unprotected))
-        print("Protected: {}".format(protected))
-        print("Image: {}".format(image))
         with graph.as_default():
-            # faces = Faces(image_paths, loaded_images, self.aligner,
-            #               verbose=1, no_align=no_align)
             faces = Faces([unprotected + "/" + image], [img], self.aligner,
                           verbose=1, no_align=no_align)
             original_images = faces.cropped_faces
@@ -128,20 +104,10 @@ class Fawkes(object):
             original_images = np.array(original_images)
 
             with sess.as_default():
-                # if separate_target:
-                #     target_embedding = []
-                #     for org_img in original_images:
-                #         org_img = org_img.reshape([1] + list(org_img.shape))
-                #         tar_emb = select_target_label(org_img,
-                #                   self.feature_extractors_ls, self.fs_names)
-                #         target_embedding.append(tar_emb)
-                #     target_embedding = np.concatenate(target_embedding)
-                # else:
-                #     target_embedding = select_target_label(original_images,
-                #                   self.feature_extractors_ls, self.fs_names)
-                target_embedding = select_target_label(original_images,
-                                                       self.feature_extractors_ls,
-                                                       self.fs_names)
+                target_embedding = select_target_label(
+                    original_images,
+                    self.feature_extractors_ls,
+                    self.fs_names)
 
                 if current_param != self.protector_param:
                     self.protector_param = current_param
@@ -149,21 +115,25 @@ class Fawkes(object):
                     if self.protector is not None:
                         del self.protector
 
-                    self.protector = FawkesMaskGeneration(sess, self.feature_extractors_ls,
-                                                          batch_size=batch_size,
-                                                          mimic_img=True,
-                                                          intensity_range='imagenet',
-                                                          initial_const=sd,
-                                                          learning_rate=lr,
-                                                          max_iterations=max_step,
-                                                          l_threshold=th,
-                                                          verbose=1 if debug else 0,
-                                                          maximize=False,
-                                                          keep_final=False,
-                                                          image_shape=(224, 224, 3))
+                    self.protector = FawkesMaskGeneration(
+                        sess,
+                        self.feature_extractors_ls,
+                        batch_size=batch_size,
+                        mimic_img=True,
+                        intensity_range='imagenet',
+                        initial_const=sd,
+                        learning_rate=lr,
+                        max_iterations=max_step,
+                        l_threshold=th,
+                        verbose=1 if debug else 0,
+                        maximize=False,
+                        keep_final=False,
+                        image_shape=(224, 224, 3))
 
-                protected_images = generate_cloak_images(self.protector, original_images,
-                                                         target_emb=target_embedding)
+                protected_images = generate_cloak_images(
+                    self.protector,
+                    original_images,
+                    target_emb=target_embedding)
 
                 faces.cloaked_cropped_faces = protected_images
 
@@ -171,10 +141,6 @@ class Fawkes(object):
                     protected_images),
                     reverse_process_cloaked(original_images))
 
-        # for p_img, path in zip(final_images, image_paths):
-        #     file_name = "{}_{}_cloaked.{}".format(".".join(path.split(".")[:-1]), mode, format)
-        #     dump_image(p_img, file_name, format=format)
-        # import pdb;pdb.set_trace()
         backend_img = protected + "/" + image
         dump_image(final_images[0], backend_img, format=format)
 
@@ -209,7 +175,6 @@ class Fawkes(object):
 def t_makeup_avatar(image_name, lang="spanish"):
     """ Protect face from avatar """
 
-    import pdb;pdb.set_trace()
     directory = os.path.dirname(os.path.realpath(__file__))
     root_dir_idx = directory.find("backend")
     image_temp = os.path.join(directory[:root_dir_idx],
@@ -231,12 +196,6 @@ def t_makeup_avatar(image_name, lang="spanish"):
         image_format = 'jpeg'
 
     protector = Fawkes('high_extract', 0, 1)
-    # TODO: Considerar directorio de entrada y salida
-    # TODO: mode min medium high, etc
-    # image_paths = glob.glob(os.path.join(image_temp, "*"))
-    # image_paths = [path for path in image_paths if "_cloaked" not in path.split("/")[-1]]
-
-    # protector.run_protection(image_paths, 'min', format=image_format)
     response = protector.run_protection(image_temp, fecal_temp, image_name,
                                         'mid', format=image_format, lang=lang)
     return response
