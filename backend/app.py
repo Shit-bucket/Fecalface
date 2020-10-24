@@ -76,4 +76,4 @@ if __name__ == '__main__':
     CORS(app)
     home = Blueprint('home_views', __name__)
     app.register_blueprint(home)
-    app.run(host=ip, port=5000, debug=True)
+    app.run(host=ip, port=9002, debug=True)
