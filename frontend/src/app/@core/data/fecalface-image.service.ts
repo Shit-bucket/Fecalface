@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 // Dialog
 import { NbDialogService } from '@nebular/theme';
@@ -52,9 +53,9 @@ export class FecalfaceImageService {
     }  
     
     /* Http Service */
-    // private readonly processUrl: string = environment.apiUrl + 'pub/items';
     // TODO : Use environment to set processUrl
-    private readonly processUrl: string = 'http://127.0.0.1:5000/';
+    // private readonly processUrl: string = 'http://127.0.0.1:5000/';
+    private readonly processUrl: string = environment.apiURL;
     
     // Get test
     public postTest$(): Observable<any> {
@@ -68,33 +69,13 @@ export class FecalfaceImageService {
 
     // Generic POST request
     public postRequest$(module: string, param: any): Observable<any> {
-        console.log("POST ", module, param);
+        console.log("POST ", this.processUrl + module, param);
         return this.http.post<any>(this.processUrl + module, param);
     }
     
-    // Generic POST and GET request
-    // public executeRequest$(module: string, param: any): Observable<any> {
-    //     return this.http.post<any>(this.processUrl + module, param)
-    //                .pipe(mergeMap(task => this.getRequestResult$('result/' + task.task, task)));
-    // }
-    // // GET request result
-    // public getRequestResult$(url: string, task: any): Observable<any> {
-    //     for (let indexTaskexec in this.globalResult['taskexec']) {
-    //         if (this.globalResult['taskexec'][indexTaskexec].module == task.module && 
-    //             this.globalResult['taskexec'][indexTaskexec].param == task.param) {
-
-    //             this.globalResult['taskexec'][indexTaskexec].task_id = task.task;
-    //             this.globalResult['taskexec'][indexTaskexec].state = "PROCESS";
-    //             // console.log("State change..................");
-
-    //         } 
-    //     }
-    //     return this.http.get<any>(this.processUrl + url);
-    // }
-
     /* Get Avatar from instagram */
     public getInstagramAvatar(username: string, lang: string) {
-      console.log('Get Instagram Avatar');
+      console.log('Get Instagram Avatar', this.processUrl);
       this.postRequest$('instagram', {username: username, lang: lang})
           .subscribe(this.responseAvatar,
                      err => console.error('Ops: ', err.message),
