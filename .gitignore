@@ -99,6 +99,7 @@ avatar/
 face/
 makeup/
 recog/
+dist/
 
 # Pyenv #
 #########

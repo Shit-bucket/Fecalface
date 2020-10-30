@@ -1,4 +1,5 @@
 import { Component, OnDestroy, AfterViewInit, ViewChild, OnInit } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { NbThemeService } from '@nebular/theme';
 import { takeWhile } from 'rxjs/operators' ;
 import { NbDialogService } from '@nebular/theme';
@@ -65,7 +66,7 @@ export class FecalfaceComponent implements OnInit, OnDestroy {
     async downloadImg(url: string) {
       console.log("Image : ", url)
       const a = document.createElement("a");
-      a.href = await this.toDataURL("http://127.0.0.1:5000" + url);
+      a.href = await this.toDataURL(environment.apiURL + url);
       a.download = "avatar-fecalface.jpg";
       document.body.appendChild(a);
       a.click();
