@@ -71,7 +71,7 @@ def r_recog():
 
 class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory="../frontend/dis/", **kwargs)
+        super().__init__(*args, directory="../frontend/dist/", **kwargs)
 
 
 def startHttpServer():
