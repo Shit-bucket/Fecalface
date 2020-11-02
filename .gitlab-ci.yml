@@ -1,0 +1,25 @@
+image: node:12.19.0
+
+stages:
+  - install
+  - test
+
+install:
+  stage: install
+  script: 
+    - cd frontend
+    - npm install -g @angular/cli
+    - npm install
+  artifacts:
+    expire_in: 20m
+    paths:
+      - node_modules/
+  cache:
+    paths:
+      - node_modules/
+
+test:nglint:
+  stage: test
+  script:
+    - cd frontend
+    - npm run lint:ci
