@@ -17,9 +17,9 @@ export class FecalfaceComponent implements OnInit, OnDestroy {
 
     private alive = true;
     public flipped: Boolean = false;
-    public selectedLang: string = "spanish";
-    public selectedItem: string = "instagram";
-    public selectedStep: string = "Detect";
+    public selectedLang: string = 'spanish';
+    public selectedItem: string = 'instagram';
+    public selectedStep: string = 'Detect';
     public result: any;
 
     constructor(private fecalfaceImageService: FecalfaceImageService) { }
@@ -29,26 +29,23 @@ export class FecalfaceComponent implements OnInit, OnDestroy {
     }
 
     toggleFlipViewAndProcess(lang, rrss, username) {
-        console.log("lang", this.selectedLang);
-        console.log("rrss", this.selectedItem);
-        console.log("username", username);
 
         this.flipped = !this.flipped;
-        
-        this.result = this.fecalfaceImageService.initialize();
-        console.log("Global data initialize", this.result);
 
-        this.result = this.fecalfaceImageService.pushResult("lang", lang);
-        this.result = this.fecalfaceImageService.getInstagramAvatar(username, this.selectedLang); 
+        this.result = this.fecalfaceImageService.initialize();
+        console.log('Global data initialize', this.result);
+
+        this.result = this.fecalfaceImageService.pushResult('lang', lang);
+        this.result = this.fecalfaceImageService.getInstagramAvatar(username, this.selectedLang);
         this.result = this.fecalfaceImageService.pullResult();
 
-        console.log("Global result", this.result);
+        console.log('Global result', this.result);
     }
 
     toggleFlipView() {
         this.flipped = !this.flipped;
     }
-     
+
     ngOnDestroy() {
       this.alive = false;
     }
@@ -64,10 +61,10 @@ export class FecalfaceComponent implements OnInit, OnDestroy {
     }
 
     async downloadImg(url: string) {
-      console.log("Image : ", url)
-      const a = document.createElement("a");
+      console.log('Image : ', url);
+      const a = document.createElement('a');
       a.href = await this.toDataURL(environment.apiURL + url);
-      a.download = "avatar-fecalface.jpg";
+      a.download = 'avatar-fecalface.jpg';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);

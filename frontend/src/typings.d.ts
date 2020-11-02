@@ -10,6 +10,6 @@ interface NodeModule {
   id: string;
 }
 
-declare var tinymce: any;
+// declare var tinymce: any;
 
-declare var echarts: any;
+// declare var echarts: any;
