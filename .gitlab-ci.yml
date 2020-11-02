@@ -13,10 +13,10 @@ install:
   artifacts:
     expire_in: 20m
     paths:
-      - node_modules/
+      - frontend/node_modules/
   cache:
     paths:
-      - node_modules/
+      - frontend/node_modules/
 
 test:nglint:
   stage: test
