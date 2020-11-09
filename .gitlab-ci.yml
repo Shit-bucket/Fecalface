@@ -45,7 +45,7 @@ build:
       - cp -r backend /tmp/Fecalface-pack
       - cp requirements.txt /tmp/Fecalface-pack
       - cp -r frontend/dist /tmp/Fecalface-pack/frontend
-      - mv /tmp/Fecalface-pack/backend/.README.md /tmp/Fecalface-pack/
+      - mv /tmp/Fecalface-pack/backend/.README.md /tmp/Fecalface-pack/README.md
       - cd /tmp
       - zip -r latest.zip ./Fecalface-pack
       - mv /tmp/latest.zip "$CI_PROJECT_DIR"

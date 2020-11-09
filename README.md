@@ -76,8 +76,9 @@ Visit the [website][website] of the project.
 Go to our [website][website]. Download the ZIP file and unzip it.
 ```
 unzip latest.zip
-cd latest
+cd Fecalface-pack
 pip install -r requirements.txt
+cd backend
 python app.py -e prod
 ```
 And, finally, [browse](#browse) it.
