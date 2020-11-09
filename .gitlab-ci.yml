@@ -3,15 +3,17 @@ image: node:12.19.0
 stages:
   - install
   - test
+  - build
+  - deploy
 
 install:
   stage: install
   script: 
     - cd frontend
-    - npm install -g @angular/cli
+    - npm install @angular/cli
     - npm install
   artifacts:
-    expire_in: 20m
+    expire_in: 2 weeks
     paths:
       - frontend/node_modules/
   cache:
@@ -20,6 +22,59 @@ install:
 
 test:nglint:
   stage: test
+  dependencies:
+      - install
   script:
-    - cd frontend
-    - npm run lint:ci
+      - cd frontend
+      - npm run lint:ci
+
+build:
+  stage: build
+  dependencies:
+      - test:nglint
+  before_script:
+      - apt-get update -qy
+      - apt-get -y install zip unzip
+  script:
+      - cd frontend
+      - npm install @angular/cli
+      - npm install @angular-devkit/build-angular
+      - npm run build
+      - cd ..
+      - mkdir -p /tmp/Fecalface-pack/frontend
+      - cp -r backend /tmp/Fecalface-pack
+      - cp requirements.txt /tmp/Fecalface-pack
+      - cp -r frontend/dist /tmp/Fecalface-pack/frontend
+      - mv /tmp/Fecalface-pack/backend/.README.md /tmp/Fecalface-pack/
+      - cd /tmp
+      - zip -r latest.zip ./Fecalface-pack
+      - mv /tmp/latest.zip "$CI_PROJECT_DIR"
+      - cd $CI_PROJECT_DIR
+  artifacts:
+    expire_in: 2 weeks
+    paths:
+      - latest.zip
+  only:
+    - master
+
+deploy:
+  stage: deploy
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  script:
+    - git config --global user.email "${GITLAB_USER_EMAIL}"
+    - git config --global user.name "${GITLAB_USER_NAME}"
+    - git clone git@gitlab.com:kennbroorg/shit-bucket/fecalface-page.git /tmp/page
+    - cp latest.zip /tmp/page/file/latest.zip
+    - cd /tmp/page
+    - git add file/latest.zip
+    - git commit -m "Fecalface ZIP file from $CI_COMMIT_SHORT_SHA" || echo "No changes, nothing to commit!"
+    - git remote rm origin && git remote add origin git@gitlab.com:kennbroorg/shit-bucket/fecalface-page.git
+    - git push origin master
+  only:
+    - master
